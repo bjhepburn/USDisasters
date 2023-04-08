@@ -1,6 +1,6 @@
 let map = L.map("map", {
     center: [39.83, -99.09],
-    zoom: 2
+    zoom: 5
 });
 
 // Adding the tile layer
@@ -13,13 +13,32 @@ const url = "https://www.fema.gov/api/open/v1/FemaWebDisasterDeclarations";
 
 // D3 call & function
 d3.json(url).then((response) => {
+    let yearDisasters = [];
     let disasters = response.FemaWebDisasterDeclarations;
-
-    d3.select("#selDataset").on("change", optionChanged);
-    function optionChanged() {
+    // console.log(disasters);
+    let year = d3.select("#selDataset").on("change", updateYear);
+    
+    function updateYear() {
         let dropdownMenu = d3.select("#selDataset");
         let selection = dropdownMenu.property("value"); 
         console.log(selection);
-    }
+        updateMapPie(selection);
     
+
+        
+        function updateMapPie(year) {
+            for (let i = 0; i < disasters.length; i++) {
+                let disaster = disasters[i];
+                if (disaster.incidentBeginDate.includes(year)) {
+                    yearDisasters.push(disaster);
+                };
+            
+        }
+        
+    }
+    let geojason = L.choropleth(yearDisasters, {
+        valueProperty: ""
+    })
+    console.log(yearDisasters);
+}
 });
