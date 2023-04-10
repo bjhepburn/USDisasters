@@ -18,6 +18,10 @@
   <!-- leaflet-choropleth JavaScript -->
   <script type="text/javascript" src="https://leafletjs.com/examples/choropleth/us-states.js"></script>
 
+  <!-- Plotly Plugin -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
   </head>
 
 <body>
@@ -25,7 +29,7 @@
     <h1>US Natural Disasters Dashboard</h1></div>
   <div>
     <h5>Year Selection</h5>
-    <select id="selDataset" onchange="optionChanged(this.value)">
+    <select id="selYear" onchange="yearChange()">
       <option disabled="disabled" selected="selected">Select a year</option>
       <option>2016</option>
       <option>2017</option>
@@ -36,16 +40,31 @@
       <option>2022</option>
       <option>2023</option>
     </select> 
+
+    <select id="selDisaster" onchange="disasterChanged(this.value)">
+      <option disabled="disabled" selected="selected">Select a disaster</option>
+      <option>Fire</option>
+      <option>Hurricane</option>
+    </select>
+
+    <select id="selState" onchange="stateChange()">
+      <option disabled="disabled" selected="selected">Select a state</option>
+    </select>
   </div>
 
+
+
+
   <!-- The div that holds our map -->
-  <div id="map"></div>
+  <div class="charts">
+    <div id="pie"></div>
 
   <!-- The div that holds our pie -->
-  <div id="pie"></div>
+    <div id="plot"></div>
+  </div>
 
   <!-- The div that holds our plot -->
-  <div id="plot"></div>
+  <div id="map"></div>
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
