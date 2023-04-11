@@ -62,7 +62,7 @@ d3.json(url).then((response) => {
             labels: Object.keys(disasterCounts),
             type: 'pie'
         }];
-        let layout = {height: 400, width: 400};
+        let layout = {height: 500, width: 500};
 
         Plotly.newPlot('pie',trace,layout);
         console.log(disasterCounts);

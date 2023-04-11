@@ -21,6 +21,8 @@
   <!-- Plotly Plugin -->
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+
 
   </head>
 
@@ -56,15 +58,17 @@
 
 
   <!-- The div that holds our map -->
-  <div class="charts">
-    <div id="pie"></div>
+  <table>
+    <tr>
+      <td><div id="pie" style="width: 500px;"></div></td>
 
   <!-- The div that holds our pie -->
-    <div id="plot"></div>
-  </div>
-
+      <td><div id="plot" style = "width: 1200px;"></div></td>
+    </tr>
+  </table>
   <!-- The div that holds our plot -->
   <div id="map"></div>
+
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
