@@ -22,7 +22,7 @@ const stateArray = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA',
 let stateObj = {};
 
 // D3 call & function
-d3.json(geoJson).then(response => {
+d3.json(url).then(response => {
     let disasters = response.FemaWebDisasterDeclarations;
     console.log(response);
     var year = 2016;
