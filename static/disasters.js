@@ -9,6 +9,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 const url = "https://www.fema.gov/api/open/v1/FemaWebDisasterDeclarations";
+const geoJson = "http://127.0.0.1:8000/tractorBeam.json"
+const annualData = "http://127.0.0.1:8000/annualData"
+const test = 'https://leafletjs.com/examples/choropleth/us-states.js'
 
 const stateArray = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA',
     'HI','ID','IL','IN','IA','KS','KY','LA','ME','MD',
@@ -19,10 +22,11 @@ const stateArray = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA',
 let stateObj = {};
 
 // D3 call & function
-d3.json(url).then((response) => {
+d3.json(geoJson).then(response => {
     let disasters = response.FemaWebDisasterDeclarations;
-    console.log(disasters);
+    console.log(response);
     var year = 2016;
+
 
     let select = document.getElementById("selState");
     for (let i = 0; i < stateArray.length; i++) {
@@ -43,32 +47,74 @@ d3.json(url).then((response) => {
         year = selection.property('value');
         updatePie(year);
       }
+    
+
+    // function updatePie(year) {
+    //     let disasterCounts = {};
+    //     for (let i = 0; i < disasters.length; i++) {
+    //         if (disasters[i].incidentBeginDate.includes(year)) {
+    //         let disType = disasters[i].incidentType;
+    //         if (disType in disasterCounts) {
+    //             disasterCounts[disType] ++;
+    //         }
+    //         else{
+    //             disasterCounts[disType] = 1;
+    //         }
+    //     }
+    // }
+    //     let trace = [{
+    //         values: Object.values(disasterCounts),
+    //         labels: Object.keys(disasterCounts),
+    //         type: 'pie'
+    //     }];
+    //     let layout = {height: 500, width: 500};
+
+    //     Plotly.newPlot('pie',trace,layout);
+    //     console.log(disasterCounts);
+    // }
 
     function updatePie(year) {
         let disasterCounts = {};
+        let data = [];
         for (let i = 0; i < disasters.length; i++) {
             if (disasters[i].incidentBeginDate.includes(year)) {
-            let disType = disasters[i].incidentType;
-            if (disType in disasterCounts) {
-                disasterCounts[disType] ++;
-            }
-            else{
-                disasterCounts[disType] = 1;
+                let disType = disasters[i].incidentType;
+                if (disType in disasterCounts) {
+                    disasterCounts[disType] ++;
+                }
+                else{
+                    disasterCounts[disType] = 1;
+                }
             }
         }
+        let counter = 1
+        for (key in disasterCounts) {
+            let dataObj = {name:key, value:disasterCounts[key],colorValue:counter};
+            counter ++;
+            data.push(dataObj);
+        }
+        Highcharts.chart('pie', {
+            colorAxis: {
+                minColor: '#FFFFFF',
+                maxColor: Highcharts.getOptions().colors[0]
+            },
+            series: [{
+                type: 'treemap',
+                layoutAlgorithm: 'squarified',
+                clip: false,
+                data:data
+            }],
+            title: {
+                text: `Disasters Breakdown for ${year}`
+            }
+        });
+        
     }
-        let trace = [{
-            values: Object.values(disasterCounts),
-            labels: Object.keys(disasterCounts),
-            type: 'pie'
-        }];
-        let layout = {height: 500, width: 500};
 
-        Plotly.newPlot('pie',trace,layout);
-        console.log(disasterCounts);
-    }
+    // L.geoJson(geoJson).addTo(map);
 
-    // Update the chart for state
+
+    // Update the scatterplot for state
     d3.select("#selState").on("change", stateChange);
     function stateChange() {
         let selection = d3.select("#selState");
@@ -98,15 +144,15 @@ d3.json(url).then((response) => {
     //     let state = disasters[i].stateCode;
     //     stateObj[state].push({'incidentType':disasters[i].incidentType})
     //     // console.log(stateObj.key,stateObj[state]);
-        // for (k = 0; k < stateObj.length; k++) {
+    //     for (k = 0; k < stateObj.length; k++) {
             
-            // if (state == stateObj.key) {
-            //     stateObj[k].push({'disasterNumber':disasters[i].disasterNumber,
-            //     'disasterName':disasters[i].disasterName,'incidentBeginDate':disasters[i].incidentBeginDate,
-            //     'incidentEndDate':disasters[i].incidentEndDate,'incidentType':disasters[i].incidentType,
-            //     'stateCode':disasters[i].stateCode,'stateName':disasters[i].stateName})
-            // }
-        // }
+    //         if (state == stateObj.key) {
+    //             stateObj[k].push({'disasterNumber':disasters[i].disasterNumber,
+    //             'disasterName':disasters[i].disasterName,'incidentBeginDate':disasters[i].incidentBeginDate,
+    //             'incidentEndDate':disasters[i].incidentEndDate,'incidentType':disasters[i].incidentType,
+    //             'stateCode':disasters[i].stateCode,'stateName':disasters[i].stateName})
+    //         }
+    //     }
 
 
     
