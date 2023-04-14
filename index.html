@@ -35,47 +35,51 @@
   </head>
 
 <body>
-  <div class="col-md-12 jumbotron text-center">
-    <h1>US Natural Disasters Dashboard</h1></div>
-  <div>
-    <h5>Year Selection</h5>
-    <select id="selYear" onchange="yearChange()">
-      <option disabled="disabled" selected="selected">Select a year</option>
-      <option>2016</option>
-      <option>2017</option>
-      <option>2018</option>
-      <option>2019</option>
-      <option>2020</option>
-      <option>2021</option>
-      <option>2022</option>
-      <option>2023</option>
-    </select> 
-
-    <select id="selDisaster" onchange="disasterChanged(this.value)">
-      <option disabled="disabled" selected="selected">Select a disaster</option>
-      <option>Fire</option>
-      <option>Hurricane</option>
-    </select>
-
-    <select id="selState" onchange="stateChange()">
-      <option disabled="disabled" selected="selected">Select a state</option>
-    </select>
-  </div>
-
-
-
-
   <!-- The div that holds our map -->
   <table>
     <tr>
-      <td><div id="pie" style="width: 500px;"></div></td>
+      <td><div style = "width: 500px;">
+        <center>
+          
+        
+        <h5>Year Selection</h5>
+        <select id="selYear"  onchange="yearChange()">
+          <option disabled="disabled" selected="selected">Select a year</option>
+          <option>2016</option>
+          <option>2017</option>
+          <option>2018</option>
+          <option>2019</option>
+          <option>2020</option>
+          <option>2021</option>
+          <option>2022</option>
+          <option>2023</option>
+        </select> 
+        <br><br><br>
+        <select id="selDisaster" onchange="disasterChanged(this.value)">
+          <option disabled="disabled" selected="selected">Select a disaster</option>
+          <option>Fire</option>
+          <option>Hurricane</option>
+        </select>
+        <br><br><br>
+        
+        <select id="selState" onchange="stateChange()">
+          <option disabled="disabled" selected="selected">Select a state</option>
+        </select></center>
+      </div></td>
 
-  <!-- The div that holds our pie -->
-      <td><div id="plot" style = "width: 1200px;"></div></td>
-    </tr>
-  </table>
+  <!-- The div that holds our scatter -->
+      <td><div id="plot" style = "width: 1500px;"></div></td></tr>
+    
+
+
+    <tr>
+      <td><figure class = "highcharts-figure">
+        <div id="pie" style = 'width: 500px;'></div>
+      </figure></td>
+
+ 
   <!-- The div that holds our plot -->
-  <div id="map"></div>
+  <td><div id="map"></div></td></tr> </table>
 
 
   <!-- Leaflet JS -->
@@ -87,7 +91,11 @@
   <!-- API key -->
   <!-- <script type="text/javascript" src="static/js/config.js"></script> -->
   <!-- Our JavaScript -->
+  <script src="static/disasterData.js"></script>
+  <script src="static/yearData.js"></script>
+  <script src="static/tractorBeam.js"></script>
   <script type="text/javascript" src="static/disasters.js"></script>
+
 </body>
 
 </html>
