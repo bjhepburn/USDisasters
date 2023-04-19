@@ -43,8 +43,8 @@ function getColor(d) {
 };
 
 // D3 call & function
-d3.json(url).then(response => {
-    let disasters = response.FemaWebDisasterDeclarations;
+d3.json(test).then(response => {
+    let disasters = response;
 
     let select = document.getElementById("selState");
     for (let i = 0; i < stateArray.length; i++) {
