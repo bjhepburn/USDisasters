@@ -35,10 +35,18 @@
   </head>
 
 <body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 jumbotron text-center">
+        <h1>U.S. Natural Disasters Dashboard</h1>
+        <p>Use the interactive charts below to explore the dataset</p>
+      </div>
+    </div>
+    </div>
   <!-- The div that holds our map -->
   <table>
     <tr>
-      <td><div style = "width: 500px;">
+      <td><div style = "width: 400px;">
         <center>
           
         
@@ -68,19 +76,18 @@
       </div></td>
 
   <!-- The div that holds our scatter -->
-      <td><div id="plot" style = "width: 1500px;"></div></td></tr>
-    
-
-
-    <tr>
-      <td><figure class = "highcharts-figure">
-        <div id="pie" style = 'width: 500px;'></div>
-      </figure></td>
-
+      <td>
+        <figure class = "highcharts-figure">
+          <div id="pie" style = 'width: 500px;'></div>
+        </figure>
+      </td>
+      <td>
+        <div id="plot" style = "width: 1000px;"></div>
+      </td>
+    </table>
  
   <!-- The div that holds our plot -->
-  <td><div id="map"></div></td></tr> </table>
-
+      <div class = 'center' id="map"></div>  
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
@@ -91,7 +98,7 @@
   <!-- API key -->
   <!-- <script type="text/javascript" src="static/js/config.js"></script> -->
   <!-- Our JavaScript -->
-  <script src="static/disasterData.js"></script>
+  <!-- <script src="static/disasterData.js"></script> -->
   <script src="static/yearData.js"></script>
   <script src="static/tractorBeam.js"></script>
   <script type="text/javascript" src="static/disasters.js"></script>
