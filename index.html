@@ -63,13 +63,14 @@
           <option>2023</option>
         </select> 
         <br><br><br>
-        <select id="selDisaster" onchange="disasterChanged(this.value)">
+        <h5>Disaster Selection</h5>
+        <select id="selDisaster" onchange="updateDisaster(this.value)">
           <option disabled="disabled" selected="selected">Select a disaster</option>
           <option>Fire</option>
           <option>Hurricane</option>
         </select>
         <br><br><br>
-        
+        <h5>State Selection</h5>
         <select id="selState" onchange="stateChange()">
           <option disabled="disabled" selected="selected">Select a state</option>
         </select></center>

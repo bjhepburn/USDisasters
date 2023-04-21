@@ -3,7 +3,7 @@ let map = L.map("map", {
     zoom: 5
 });
 
-let choroData = geoData;
+const choroData = geoData;
 let disasters2016 = Object.values(annual['2016']);
 let disasters2017 = Object.values(annual['2017']);
 let disasters2018 = Object.values(annual['2018']);
@@ -12,7 +12,7 @@ let disasters2020 = Object.values(annual['2020']);
 let disasters2021 = Object.values(annual['2021']);
 let disasters2022 = Object.values(annual['2022']);
 let disasters2023 = Object.values(annual['2023']);
-let disObj = {'2016':disasters2016, '2017':disasters2016, '2018':disasters2016, '2019':disasters2016};
+let disObj = {'2016':disasters2016, '2017':disasters2017, '2018':disasters2018, '2019':disasters2019,'2020':disasters2020,'2021':disasters2021,'2022':disasters2022,'2023':disasters2023};
 
 // Adding the tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -32,13 +32,13 @@ let stateObj = {};
 
 // Functions to update map
 function getColor(d) {
-    return d > 5  ? '#800026' :
-           d > 4  ? '#BD0026' :
-           d > 3  ? '#E31A1C' :
-           d > 2  ? '#FC4E2A' :
-           d > 1  ? '#FD8D3C' :
-           d > 0  ? '#FEB24C' :
-           d = 0  ? '#FED976' :
+    return d > 6  ? '#800026' :
+           d > 5  ? '#BD0026' :
+           d > 4  ? '#E31A1C' :
+           d > 3  ? '#FC4E2A' :
+           d > 2  ? '#FD8D3C' :
+           d > 1  ? '#FEB24C' :
+           d > 0  ? '#FED976' :
                     '#FFEDA0';
 };
 
@@ -73,23 +73,47 @@ d3.json(test).then(response => {
         let disasterSet = disasterObj;
         let geoData = choroData;
         for (i = 0; i < disasterSet.length; i++) {
-                if (disasterSet[i].stateName === geoData.features[i].properties.name) {
-                    geoData.features[i].properties = disasterSet[i];
+            for (j = 0; j < geoData['features'].length; j++) {
+                if (disasterSet[i].stateName === geoData.features[j].properties.name) {
+                    geoData.features[j].properties.density = disasterSet[i][disaster];
                 }
-            }
-        console.log(geoData);
+                
+        }}
+            
+        
 
-        let style = {
-            fillColor: getColor(geoData.features.properties[disaster]),
-            weight: 2,
-            opacity: 1,
-            color: 'white',
-            dashArray: '3',
-            fillOpacity: .7
-            };
-        L.geoJson(geoData,style).addTo(map);
+        function style(feature) {
+                return {
+                fillColor: getColor(feature.properties.density),
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: .7
+                };}
+        L.geoJson(geoData,{style:style}).addTo(map);
     };
-     
+
+    var legend = L.control({position: 'bottomleft'});
+    legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 1, 2, 3, 4, 5, 6, 7],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i]) + '"></i> ' +
+            grades[i] + '<br>';
+    }
+
+    return div;
+};
+legend.addTo(map);
+    
+    
+
+
     d3.select("#selDisaster").on("change", updateDisaster);
     function updateDisaster() {
                 let dropdownMenu = d3.select("#selDisaster");
